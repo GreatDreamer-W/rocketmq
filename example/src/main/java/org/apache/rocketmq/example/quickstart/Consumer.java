@@ -71,6 +71,7 @@ public class Consumer {
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         });
+        ceshi 
 
         /*
          *  Launch the consumer instance.
