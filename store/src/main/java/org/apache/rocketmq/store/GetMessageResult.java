@@ -23,8 +23,10 @@ import org.apache.rocketmq.store.stats.BrokerStatsManager;
 
 public class GetMessageResult {
 
+    private MessageExtBrokerInner msg;
+
     private final List<SelectMappedBufferResult> messageMapedList =
-        new ArrayList<SelectMappedBufferResult>(100);
+            new ArrayList<SelectMappedBufferResult>(100);
 
     private final List<ByteBuffer> messageBufferList = new ArrayList<ByteBuffer>(100);
 
@@ -41,9 +43,20 @@ public class GetMessageResult {
 
     public GetMessageResult() {
     }
+    public GetMessageResult(MessageExtBrokerInner msg) {
+        this.msg=msg;
+    }
 
     public GetMessageStatus getStatus() {
         return status;
+    }
+
+    public MessageExtBrokerInner getMsg() {
+        return msg;
+    }
+
+    public void setMsg(MessageExtBrokerInner msg) {
+        this.msg = msg;
     }
 
     public void setStatus(GetMessageStatus status) {
@@ -87,7 +100,7 @@ public class GetMessageResult {
         this.messageBufferList.add(mapedBuffer.getByteBuffer());
         this.bufferTotalSize += mapedBuffer.getSize();
         this.msgCount4Commercial += (int) Math.ceil(
-            mapedBuffer.getSize() / BrokerStatsManager.SIZE_PER_COUNT);
+                mapedBuffer.getSize() / BrokerStatsManager.SIZE_PER_COUNT);
     }
 
     public void release() {
@@ -127,8 +140,8 @@ public class GetMessageResult {
     @Override
     public String toString() {
         return "GetMessageResult [status=" + status + ", nextBeginOffset=" + nextBeginOffset + ", minOffset="
-            + minOffset + ", maxOffset=" + maxOffset + ", bufferTotalSize=" + bufferTotalSize
-            + ", suggestPullingFromSlave=" + suggestPullingFromSlave + "]";
+                + minOffset + ", maxOffset=" + maxOffset + ", bufferTotalSize=" + bufferTotalSize
+                + ", suggestPullingFromSlave=" + suggestPullingFromSlave +",msg:"+msg.toString()+ "]";
     }
 
 }
